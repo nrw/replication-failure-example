@@ -1,0 +1,32 @@
+{
+  "name": "spikes",
+  "description": "scuttlebutt demo",
+  "version": "0.0.0",
+  "repository": {
+    "url": "nrw/replication-example"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "supervisor -e 'coffee' -q -n exit -x browserify -- client.coffee -t coffeeify -o bundle.js"
+  },
+  "dependencies": {
+    "coffee-script": "1.x.x",
+    "tape": "2.x.x",
+    "domready": "~0.2.13",
+    "reconnect-core": "0.0.1",
+    "levelup": "~0.18.2",
+    "shoe": "0.0.15",
+    "level-scuttlebutt": "~5.0.6",
+    "leveldown": "~0.10.2",
+    "udid": "~0.1.4",
+    "ecstatic": "~0.4.13",
+    "crdt": "~3.6.0",
+    "level-sublevel": "~5.2.0"
+  },
+  "devDependencies": {
+    "browserify": "~3.28.2",
+    "coffeeify": "~0.6.0",
+    "reconnect-widget": "~1.0.1"
+  }
+}

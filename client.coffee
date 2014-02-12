@@ -9,16 +9,14 @@ reconnect = require('reconnect-core')(require 'shoe')
 domready ->
   # div that shows timestamp
   target = document.getElementById 'doc'
+  window.doc = doc = new Doc
+  # display changes to user
+  draw = ->
+    target.textContent = 'latest: ' + doc.get('connections')?.get('latest')
+  doc.on 'create', draw
+  doc.on 'row_update', draw
 
   recon = (stream) ->
-    window.doc = doc = new Doc
-
-    # display changes to user
-    draw = ->
-      target.textContent = 'latest: ' + doc.get('connections')?.get('latest')
-    doc.on 'create', draw
-    doc.on 'row_update', draw
-
     # wire up the doc stream
     stream.pipe(doc.createStream()).pipe stream
 

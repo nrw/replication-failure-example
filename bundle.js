@@ -10,17 +10,16 @@ reconnect = require('reconnect-core')(require('shoe'));
 Doc = require('crdt').Doc;
 
 domready(function() {
-  var r, recon, target;
+  var doc, draw, r, recon, target;
   target = document.getElementById('doc');
+  window.doc = doc = new Doc;
+  draw = function() {
+    var _ref;
+    return target.textContent = 'latest: ' + ((_ref = doc.get('connections')) != null ? _ref.get('latest') : void 0);
+  };
+  doc.on('create', draw);
+  doc.on('row_update', draw);
   recon = function(stream) {
-    var doc, draw;
-    window.doc = doc = new Doc;
-    draw = function() {
-      var _ref;
-      return target.textContent = 'latest: ' + ((_ref = doc.get('connections')) != null ? _ref.get('latest') : void 0);
-    };
-    doc.on('create', draw);
-    doc.on('row_update', draw);
     return stream.pipe(doc.createStream()).pipe(stream);
   };
   r = reconnect({}, recon).connect('/stream');

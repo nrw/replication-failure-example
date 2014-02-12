@@ -2,6 +2,7 @@
 http = require 'http'
 ecstatic = require 'ecstatic'
 shoe = require 'shoe'
+through = require 'through'
 
 # persistence
 level = require 'levelup'
@@ -19,8 +20,12 @@ scuttlebutt db, udid, (name) -> new Doc
 server = http.createServer ecstatic {root: __dirname}
 
 sock = shoe (stream) ->
+  pauser = through()
+  stream.pipe(pauser.pause()).pipe(stream)
+
   db.open 'doc', (err, doc) ->
-    stream.pipe(doc.createStream()).pipe stream
+    pauser.pipe(doc.createStream()).pipe pauser
+    pauser.resume()
 
     console.log 'latest connetion:', latest = (new Date).toISOString()
 

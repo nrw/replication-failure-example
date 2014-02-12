@@ -5,4 +5,4 @@
 5. ^C the `npm start` process
 6. wait a few seconds
 7. run `npm start` again
-8. all clients will sync except one (tested in google chrome)
+8. all clients will sync!
